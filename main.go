@@ -3,6 +3,7 @@ package main
 import (
 	"io"
 	"os"
+	"os/exec"
 
 	"github.com/kkdai/youtube/v2"
 	ffmpeg "github.com/u2takey/ffmpeg-go"
@@ -49,7 +50,7 @@ func videoFile(testFileLocation string) {
 }
 
 func playSong() {
-	file, err := os.Open("video4OkCZoSdYJ0.mp3")
+	file, err := os.Open("video4OkCZoSdYJ0_quieter.mp3")
 	if err != nil {
 		panic(err)
 	}
@@ -76,11 +77,18 @@ func playSong() {
 }
 
 func main() {
-	/*videoID := "4OkCZoSdYJ0"
-	client := youtube.Client{}
-	videoDownload(videoID, client)*/
-	//python_converter := exec.Command("python", "mp4_to_mp3.py")
-	//python_converter.Start()
-	//python_converter.Wait()
-	playSong()
+	setting := "Download"
+	videoID := "W3t-glBEe9E"
+	if setting == "Download" {
+		client := youtube.Client{}
+		videoDownload(videoID, client)
+	}
+	if setting == "Rip_Music" {
+		python_converter := exec.Command("python", "mp4_to_mp3.py")
+		python_converter.Start()
+		python_converter.Wait()
+	}
+	if setting == "Play_Music" {
+		playSong()
+	}
 }
